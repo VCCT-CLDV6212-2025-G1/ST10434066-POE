@@ -1,0 +1,19 @@
+﻿@model List<ABCRetailStorageApp.Models.BlobItemModel>
+@{
+    ViewData["Title"] = "Product Images";
+}
+<h2>Product Images</h2>
+
+<form asp-action="Upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
+
+<h3 style="margin-top:20px">Uploaded Images</h3>
+@foreach (var item in Model)
+{
+    <div style="margin:10px 0">
+        <p>@item.Name</p>
+        <img src="@item.Url" alt="@item.Name" style="max-width:300px;border:1px solid #ccc;padding:5px" />
+    </div>
+}

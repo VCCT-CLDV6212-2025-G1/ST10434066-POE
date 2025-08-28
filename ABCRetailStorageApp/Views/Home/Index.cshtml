@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "ABC Retail Storage Management";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Msg"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container py-4">
+    <div class="row g-4">
+
+        <!-- Add Customer -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Add Customer</div>
+                <div class="card-body">
+                    <form asp-controller="Tables" asp-action="AddCustomer" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input name="name" class="form-control" placeholder="Enter customer name" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input name="email" type="email" class="form-control" placeholder="Enter customer email" />
+                        </div>
+                        <button class="btn btn-primary">Add Customer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Add Product</div>
+                <div class="card-body">
+                    <form asp-controller="Tables" asp-action="AddProduct" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input name="name" class="form-control" placeholder="Enter product name" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input name="price" type="number" step="0.01" class="form-control" placeholder="Enter price" />
+                        </div>
+                        <button class="btn btn-primary">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Product Image (Blob) -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Upload Product Image (Blob Storage)</div>
+                <div class="card-body">
+                    <form asp-controller="Blobs" asp-action="Upload" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Image File</label>
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+                        <button class="btn btn-primary">Upload Image</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Queue Message -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Add Order/Inventory Message (Queue)</div>
+                <div class="card-body">
+                    <form asp-controller="Queues" asp-action="Enqueue" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <input name="text" class="form-control" placeholder="e.g., Processing order #123" />
+                        </div>
+                        <button class="btn btn-primary">Add Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional: Upload Contract (Azure Files) -->
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Upload Contract (Azure Files)</div>
+                <div class="card-body">
+                    <form asp-controller="Files" asp-action="Upload" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+                        <button class="btn btn-primary">Upload Contract</button>
+                        <a class="btn btn-link" href="/Files/Index">View Files</a>
+                        <a class="btn btn-link" href="/Tables/List">View Customers/Products</a>
+                        <a class="btn btn-link" href="/Blobs/Index">View Images</a>
+                        <a class="btn btn-link" href="/Queues/Index">View Queue</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

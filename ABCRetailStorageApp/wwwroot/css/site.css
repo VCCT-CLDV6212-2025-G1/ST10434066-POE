@@ -1,0 +1,136 @@
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background: #f3f5f7;
+    color: #1f2937;
+}
+
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #22c55e; /* green ring */
+}
+
+
+:root {
+    --accent: #22c55e; /* green */
+    --accent-700: #16a34a; /* darker green */
+    --accent-900: #166534; /* deepest for hovers */
+    --ink: #1f2937; /* slate-800 */
+    --ink-soft: #6b7280; /* slate-500 */
+}
+
+
+.navbar {
+    border-bottom: 0;
+}
+
+.accent-brand {
+    color: var(--accent) !important;
+}
+
+.navbar .nav-link {
+    color: #e5e7eb !important;
+}
+   
+    .navbar .nav-link:hover {
+        color: #ffffff !important;
+    }
+
+
+.bg-primary {
+    background-color: var(--accent) !important;
+}
+.btn-primary {
+    background-color: var(--accent) !important;
+    border-color: var(--accent-700) !important;
+}
+
+    .btn-primary:hover {
+        background-color: var(--accent-700) !important;
+        border-color: var(--accent-900) !important;
+    }
+
+.btn-dark {
+    background-color: #111827 !important; 
+    border-color: #0b1220 !important;
+}
+
+
+.alert-success {
+    background-color: #e8f8ee;
+    border-color: var(--accent);
+    color: #0b3d1f;
+}
+
+.card {
+    border: 0;
+    border-radius: .75rem;
+}
+
+.card-header {
+    border-bottom: 0;
+}
+
+.page-container {
+    max-width: 1100px;
+}
+
+.footer {
+    background: #0b1220;
+    color: #9ca3af;
+}
+
+    .footer a {
+        color: #cbd5e1;
+    }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+
+
+.form-control {
+    border-radius: .5rem;
+}
+
+.footer {
+    position: static !important;
+}
+
+
+html {
+    min-height: auto;
+}
+
+body {
+    margin-bottom: 0;
+}
+
+.page-container {
+    padding-bottom: 2rem;
+}
+
+main[role="main"] {
+    padding-bottom: 4rem;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}

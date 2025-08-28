@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ABCRetailStorageApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ABCRetailStorageApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+       
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3 shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-semibold accent-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    ABC Retail
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="mainNav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Tables/Index">Tables</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Blobs/Index">Blobs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Queues/Index">Queues</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Files/Index">Files</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container page-container">
+        <main role="main" class="pb-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer border-0">
+        <div class="container text-muted small py-3">
+            &copy; @DateTime.UtcNow.Year - ABCRetailStorageApp
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

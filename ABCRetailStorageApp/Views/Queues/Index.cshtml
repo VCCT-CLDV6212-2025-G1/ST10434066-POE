@@ -1,0 +1,22 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "Queues";
+}
+<h2>Queue Messages</h2>
+
+<form asp-action="Enqueue" method="post">
+    <input name="text" placeholder="Message text" />
+    <button type="submit">Send</button>
+</form>
+
+<form asp-action="Seed" method="post" style="margin-top:8px">
+    <button type="submit">Seed 5 messages</button>
+</form>
+
+<h3 style="margin-top:16px">Peeked messages (@Model.Count)</h3>
+<ul>
+    @foreach (var m in Model)
+    {
+        <li>@m</li>
+    }
+</ul>

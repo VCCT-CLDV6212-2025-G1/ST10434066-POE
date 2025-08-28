@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Tables";
+}
+<h2>Azure Tables (Customers & Products)</h2>
+<p>Click Seed to create 5 customers and 5 products.</p>
+
+<form asp-action="Seed" method="post">
+    <button type="submit">Seed 10 records</button>
+</form>
+
+<p style="margin-top:10px">
+    <a asp-action="List">View lists</a>
+</p>

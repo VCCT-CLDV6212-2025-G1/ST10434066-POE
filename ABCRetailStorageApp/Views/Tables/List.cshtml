@@ -1,0 +1,26 @@
+﻿@model ABCRetailStorageApp.Models.TablesView
+@{
+    ViewData["Title"] = "Tables List";
+}
+
+<h2>Customers (5+)</h2>
+<table class="table">
+    <thead><tr><th>Name</th><th>Email</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model.Customers)
+        {
+            <tr><td>@c.FirstName @c.LastName</td><td>@c.Email</td></tr>
+        }
+    </tbody>
+</table>
+
+<h2>Products (5+)</h2>
+<table class="table">
+    <thead><tr><th>Name</th><th>SKU</th><th>Price</th></tr></thead>
+    <tbody>
+        @foreach (var p in Model.Products)
+        {
+            <tr><td>@p.Name</td><td>@p.Sku</td><td>@p.Price</td></tr>
+        }
+    </tbody>
+</table>
