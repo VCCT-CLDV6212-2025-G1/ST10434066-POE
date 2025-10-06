@@ -38,6 +38,7 @@ namespace ABCRetailStorageApp
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddSingleton<ABCRetailStorageApp.Services.TableStorageService>();
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
 

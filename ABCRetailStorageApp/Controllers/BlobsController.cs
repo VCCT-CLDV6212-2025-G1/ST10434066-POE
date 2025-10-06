@@ -1,59 +1,24 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Sas;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using ABCRetailStorageApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http.Json;
 
 namespace ABCRetailStorageApp.Controllers
 {
     public class BlobsController : Controller
     {
-        private readonly string _conn;
-        private readonly string _container;
+        private readonly IHttpClientFactory _http;
+        private readonly IConfiguration _cfg;
 
-        public BlobsController(IOptions<AzureStorageOptions> opt)
+        public BlobsController(IHttpClientFactory http, IConfiguration cfg)
         {
-            _conn = opt.Value.ConnectionString;
-            _container = opt.Value.BlobContainer;
-        }
-
-        private BlobContainerClient GetContainer()
-        {
-            
-            var client = new BlobContainerClient(_conn, _container);
-            client.CreateIfNotExists();
-            return client;
-        }
-
-        private Uri GetReadSasUri(BlobClient blob, int minutes = 120)
-        {
-        
-            if (blob.CanGenerateSasUri)
-            {
-                var sas = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddMinutes(minutes))
-                {
-                    BlobContainerName = _container,
-                    BlobName = blob.Name,
-                    Resource = "b"
-                };
-                return blob.GenerateSasUri(sas);
-            }
-          
-            return blob.Uri;
+            _http = http;
+            _cfg = cfg;
         }
 
         public async Task<IActionResult> Index()
         {
-            var container = GetContainer();
-            var items = new List<BlobItemModel>();
-
-            await foreach (var b in container.GetBlobsAsync())
-            {
-                var blob = container.GetBlobClient(b.Name);
-                var sas = GetReadSasUri(blob);
-                items.Add(new BlobItemModel { Name = b.Name, Url = sas.ToString() });
-            }
-
+            var listUrl = _cfg["FunctionUrls:BlobsList"] ?? throw new InvalidOperationException("FunctionUrls:BlobsList missing");
+            var items = await _http.CreateClient().GetFromJsonAsync<List<dynamic>>(listUrl) ?? new();
             return View(items);
         }
 
@@ -62,10 +27,13 @@ namespace ABCRetailStorageApp.Controllers
         {
             if (file == null || file.Length == 0) return RedirectToAction(nameof(Index));
 
-            var container = GetContainer();
-            var blob = container.GetBlobClient(file.FileName);
-            await blob.UploadAsync(file.OpenReadStream(), overwrite: true);
+            var uploadUrl = _cfg["FunctionUrls:BlobsUpload"] ?? throw new InvalidOperationException("FunctionUrls:BlobsUpload missing");
 
+            using var content = new MultipartFormDataContent();
+            await using var stream = file.OpenReadStream();
+            content.Add(new StreamContent(stream), "file", file.FileName);
+
+            await _http.CreateClient().PostAsync(uploadUrl, content);
             return RedirectToAction(nameof(Index));
         }
     }
