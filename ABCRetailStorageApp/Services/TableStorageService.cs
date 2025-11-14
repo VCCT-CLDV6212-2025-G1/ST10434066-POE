@@ -80,7 +80,14 @@ namespace ABCRetailStorageApp.Services
         {
             var prod = _svc.GetTableClient(_prodTable);
             prod.CreateIfNotExists();
-            await prod.AddEntityAsync(new ProductEntity { Name = name ?? "", Sku = $"SKU-{Guid.NewGuid():N}".Substring(0, 8), Price = price });
+            await prod.AddEntityAsync(new ProductEntity
+            {
+                PartitionKey = "Product",
+                RowKey = Guid.NewGuid().ToString(),
+                Name = name,
+                Sku = $"SKU-{Guid.NewGuid():N}".Substring(0, 8),
+                Price = price
+            });
         }
     }
 }

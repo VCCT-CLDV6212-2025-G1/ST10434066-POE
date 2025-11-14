@@ -10,6 +10,7 @@ namespace ABCRetailStorageApp.Models
         public string Name { get; set; } = "";
         public string Sku { get; set; } = "";
         public decimal Price { get; set; }
+        public string? ImageUrl { get; set; }
         public DateTimeOffset? Timestamp { get; set; }
         public ETag ETag { get; set; }
     }

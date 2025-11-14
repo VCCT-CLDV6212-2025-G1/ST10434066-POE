@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@model List<ABCRetailStorageApp.Models.ProductEntity>
+    
+
+        @{
+    ViewData["Title"] = "Products";
+        }
+
+        <h2>Products</h2>
+
+        @if (!Model.Any())
+{
+        <p>No products available.</p>
+}
+else
+{
+        <div class="row">
+            @foreach (var p in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+
+                        @* Image *@
+                        @if (!string.IsNullOrEmpty(p.ImageUrl))
+                        {
+                        <img src="@p.ImageUrl"
+                             alt="@p.Name"
+                             class="img-fluid mb-2"
+                             style="max-height: 150px; object-fit: cover;" />
+                        }
+
+                        <h5 class="card-title">@p.Name</h5>
+
+                        <p class="card-text mb-2">
+                            Price:
+                            <strong>@p.Price.ToString("C")</strong>
+                        </p>
+
+                        <form asp-controller="Cart" asp-action="Add" method="post">
+                           
+                            <input type="hidden" name="productId" value="0" />
+                            <input type="hidden" name="productName" value="@p.Name" />
+                            <input type="hidden" name="price" value="@p.Price.ToString(CultureInfo.InvariantCulture)" />
+
+                            <div class="mb-2">
+                                <input type="number" name="quantity" class="form-control" value="1" min="1" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                Add to Cart
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+}
+
+        <div class="mt-3">
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary">
+                View Cart
+            </a>
+        </div>

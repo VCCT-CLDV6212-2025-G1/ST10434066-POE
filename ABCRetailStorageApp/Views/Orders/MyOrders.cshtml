@@ -1,0 +1,32 @@
+﻿@model List<ABCRetailStorageApp.Models.Order>
+
+<h2>My Orders</h2>
+
+@if (!Model.Any())
+{
+    <p>You have no orders yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.OrderDate</td>
+                    <td>@o.Status</td>
+                    <td>@o.TotalAmount.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

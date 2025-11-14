@@ -1,7 +1,8 @@
-﻿using System.Net.Http.Json;
+﻿using ABCRetailStorageApp.Models;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using ABCRetailStorageApp.Models;
+using System.Net.Http.Json;
 
 namespace ABCRetailStorageApp.Controllers
 {
@@ -70,14 +71,25 @@ namespace ABCRetailStorageApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(string name, decimal price)
+        public async Task<IActionResult> AddProduct(string name, decimal price, IFormFile? imageFile)
         {
-            if (string.IsNullOrWhiteSpace(name)) return RedirectToAction(nameof(List));
+            if (string.IsNullOrWhiteSpace(name))
+                return RedirectToAction(nameof(List));
+
             var client = _http.CreateClient();
             var productsUrl = _cfg["FunctionUrls:Products"]!;
-            await client.PostAsJsonAsync(productsUrl, new { name, price });
-            TempData["Msg"] = "Product added";
-            return RedirectToAction(nameof(List));
+
+            
+            var response = await client.PostAsJsonAsync(productsUrl, new { name, price });
+
+            if (!response.IsSuccessStatusCode)
+            {
+                TempData["Msg"] = "Error creating product via Azure Function.";
+                return RedirectToAction(nameof(List));
+            }
+
+            TempData["Msg"] = "Product added successfully.";
+            return RedirectToAction("Index", "Products");
         }
     }
 }

@@ -1,0 +1,48 @@
+﻿@model List<ABCRetailStorageApp.Models.Order>
+
+<h2>All Orders</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-info">@TempData["Msg"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>No orders found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>User ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.UserId</td>
+                    <td>@o.OrderDate</td>
+                    <td>@o.Status</td>
+                    <td>@o.TotalAmount.ToString("C")</td>
+                    <td>
+                        @if (o.Status == "PENDING")
+                        {
+                            <form method="post" asp-action="Process" asp-route-id="@o.Id">
+                                <button class="btn btn-success btn-sm">Mark Processed</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

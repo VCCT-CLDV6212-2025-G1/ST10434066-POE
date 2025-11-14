@@ -34,27 +34,17 @@
             </div>
         </div>
 
-        <!-- Add Product -->
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">Add Product</div>
-                <div class="card-body">
-                    <form asp-controller="Tables" asp-action="AddProduct" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input name="name" class="form-control" placeholder="Enter product name" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Price</label>
-                            <input name="price" type="number" step="0.01" class="form-control" placeholder="Enter price" />
-                        </div>
-                        <button class="btn btn-primary">Add Product</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <form asp-controller="Tables"
+              asp-action="AddProduct"
+              method="post"
+              enctype="multipart/form-data">
+            <input type="text" name="name" class="form-control" placeholder="Product Name" />
+            <input type="number" step="0.01" name="price" class="form-control" placeholder="Price" />
+            <input type="file" name="imageFile" class="form-control" />
+            <button type="submit" class="btn btn-success mt-2">Add Product</button>
+        </form>
 
-        <!-- Upload Product Image (Blob) -->
+        <!-- Upload Product Image  -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">Upload Product Image (Blob Storage)</div>
@@ -86,10 +76,10 @@
             </div>
         </div>
 
-        <!-- Optional: Upload Contract (Azure Files) -->
+        <!-- Optional: Upload Contract  -->
         <div class="col-md-12">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">Upload Contract (Azure Files)</div>
+                <div class="card-header bg-primary text-white">Upload Contract </div>
                 <div class="card-body">
                     <form asp-controller="Files" asp-action="Upload" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
